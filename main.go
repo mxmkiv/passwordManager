@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"passwordLoger/files"
-	//"github.com/fatih/color"
 )
 
 type account struct {
