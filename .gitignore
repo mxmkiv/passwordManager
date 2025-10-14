@@ -1,2 +1,6 @@
-.worktree/
-.private-journal/
+worktree/
+private-journal/
+.DS_Store
+..DS_Store
+/.DS_Store
+/..DS_Store
