@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
+	"os"
 	"passwordLoger/files"
 )
 
@@ -12,7 +14,7 @@ type account struct {
 	Url      string `json:"url"`
 }
 
-// //// account methods
+// ////////// account methods ////////////////////////
 func (acc *account) showAll() {
 	fmt.Println(acc.Login, acc.Password, acc.Url)
 }
@@ -25,7 +27,7 @@ func (acc *account) toBytes() ([]byte, error) {
 	return file, nil
 }
 
-////////
+/////////////////////////////////////////////////////
 
 func main() {
 
@@ -33,10 +35,9 @@ func main() {
 	password := getData("Введите пароль: ")
 	url := getData("Введите url: ")
 
-	acc := account{
-		Login:    login,
-		Password: password,
-		Url:      url,
+	acc, err := creatAccount(login, password, url)
+	if err != nil {
+		fmt.Print(err)
 	}
 
 	file, err := acc.toBytes()
@@ -48,9 +49,42 @@ func main() {
 	files.WriteData(file, "data.json")
 }
 
+func creatAccount(login string, password string, url string) (*account, error) {
+
+	////check empty login
+
+	if password == "" {
+		password = files.GeneratePassword()
+	}
+
+	acc := account{
+		Login:    login,
+		Password: password,
+		Url:      url,
+	}
+
+	return &acc, nil
+
+}
+
 func getData(txt string) string {
-	fmt.Print(txt)
+	scanner := bufio.NewScanner(os.Stdin)
 	var data string
-	fmt.Scan(&data)
+
+	fmt.Print(txt)
+
+	for {
+		if scanner.Scan() {
+			line := scanner.Text()
+			data = line
+			break
+		}
+
+		if err := scanner.Err(); err != nil {
+			fmt.Println("Ошибка", err)
+			break
+		}
+	}
+
 	return data
 }
