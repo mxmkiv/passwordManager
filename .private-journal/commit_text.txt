@@ -1,0 +1,9 @@
+feat: added password generation function in gen.go
+
+	- Generates a 12-character random password with uppercase, lowercase, digits, and special characters
+	- Uses random selection from a defined character set
+
+refactor: rewrote input handling using bufio.Scanner, added createAccount
+
+	- Replaced direct input with bufio.Scanner for better safety and control
+	- Added createAccount function with password validation
