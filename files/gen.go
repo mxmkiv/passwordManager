@@ -26,6 +26,6 @@ func GeneratePassword() string {
 	return pass.String()
 }
 
-// func СheckEntropy(string) {
+// func СheckEntropy(password string) float64 {
 
 // }

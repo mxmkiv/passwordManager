@@ -8,7 +8,8 @@ import (
 )
 
 func WriteData(content []byte, name string) {
-	file, err := os.Create(name)
+	filepath := "worktree/" + name
+	file, err := os.Create(filepath)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -21,11 +22,12 @@ func WriteData(content []byte, name string) {
 	color.Green("Запись успешна")
 }
 
-func ReadData(name string) {
-	data, err := os.ReadFile(name)
+func ReadData(name string) ([]byte, error) {
+	filepath := "worktree/" + name
+	data, err := os.ReadFile(filepath)
 	if err != nil {
-		fmt.Println(err)
-		return
+		return nil, err
 	}
-	fmt.Println(string(data))
+
+	return data, nil
 }
