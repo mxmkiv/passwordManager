@@ -3,7 +3,6 @@ package files
 import (
 	"bufio"
 	"fmt"
-	"os"
 )
 
 type Account struct {
@@ -16,16 +15,16 @@ func (acc *Account) DeleteAccount() {
 
 }
 
-func CreatAccount() {
+func CreatAccount(inp *bufio.Scanner) {
 
-	login := getData("Введите логин: ")
-	password := getData("Введите пароль: ")
-	url := getData("Введите url: ")
+	login := getData(inp, "Введите логин: ")
+	password := getData(inp, "Введите пароль: ")
+	url := getData(inp, "Введите url: ")
 
 	if password == "" {
 		password = GeneratePassword()
 	} else {
-		//fmt.Println("оценка пароля")
+		// ("оценка пароля")
 	}
 
 	acc := Account{
@@ -38,24 +37,13 @@ func CreatAccount() {
 	vault.AddAccount(&acc)
 }
 
-func getData(txt string) string {
-	scanner := bufio.NewScanner(os.Stdin)
-	var data string
+func getData(inp *bufio.Scanner, txt string) string {
 
 	fmt.Print(txt)
 
-	for {
-		if scanner.Scan() {
-			line := scanner.Text()
-			data = line
-			break
-		}
-
-		if err := scanner.Err(); err != nil {
-			fmt.Println("Ошибка", err)
-			break
-		}
+	if inp.Scan() {
+		return inp.Text()
 	}
 
-	return data
+	return ""
 }
