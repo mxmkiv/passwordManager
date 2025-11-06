@@ -11,15 +11,11 @@ type Account struct {
 	Url      string `json:"url"`
 }
 
-func (acc *Account) DeleteAccount() {
+func CreateAccount(vault *Vault, inp *bufio.Scanner) {
 
-}
-
-func CreatAccount(inp *bufio.Scanner) {
-
-	login := getData(inp, "Введите логин: ")
-	password := getData(inp, "Введите пароль: ")
-	url := getData(inp, "Введите url: ")
+	login := GetData(inp, "Введите логин: ")
+	password := GetData(inp, "Введите пароль: ")
+	url := GetData(inp, "Введите url: ")
 
 	if password == "" {
 		password = GeneratePassword()
@@ -33,11 +29,10 @@ func CreatAccount(inp *bufio.Scanner) {
 		Url:      url,
 	}
 
-	vault := NewVault()
 	vault.AddAccount(&acc)
 }
 
-func getData(inp *bufio.Scanner, txt string) string {
+func GetData(inp *bufio.Scanner, txt string) string {
 
 	fmt.Print(txt)
 
