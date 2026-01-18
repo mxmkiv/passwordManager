@@ -8,7 +8,9 @@ import (
 )
 
 func WriteData(content []byte, name string) {
-	filepath := "worktree/" + name
+	dirName := "worktree"
+	filepath := dirName + "/" + name
+	os.Mkdir(dirName, 0755)
 	file, err := os.Create(filepath)
 	if err != nil {
 		fmt.Println(err)
